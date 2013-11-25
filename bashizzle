@@ -1,0 +1,32 @@
+#!/bin/bash 
+
+keyword(){
+  keyword="$@"
+  echo "$keyword" >> /tmp/keyword
+  catfile "$keyword" && return 0
+  runcmd "$keyword" 
+  [[ "$keyword" =~ "snippet" ]] && find ~/.vim/snippets && return 0
+  find ~/.vim/snippets -name "*$keyword*" 
+}
+
+catfile(){
+  [[ -f "$1" ]] && cat "$1" | filtertext && return 0
+  return 1
+}
+
+runcmd(){
+  cmd="$1"; iscommand=0; forbidden="rm sudo su" ; application=""
+  for token in $cmd; do which "$token" &>/dev/null && iscommand=1; break; done # check if first arg is command 
+  for token in $cmd; do 
+    for sin in $forbidden; do [[ "$token" =~ "$sin " ]] && return 0; done 
+  done 
+  (( $iscommand == 1 )) && ${cmd} && return 0 || return 0 # seems fine, lets do it
+  return 1
+}
+
+filtertext(){
+  cat - | while read line; do eval "echo \"$( echo "$line" | sed 's/"/\\"/g')\""; done
+  return 0
+}
+
+"$@"

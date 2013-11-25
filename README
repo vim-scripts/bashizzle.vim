@@ -1,0 +1,28 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=4780
+
+This plugin enables bash templates / filtering, aka the macgyver-style of using snippets.
+Shellintegration is already possible using '!' and '.!' and such, but I wanted a faster / more templated way of doing things.
+
+SEE VIDEODEMO HERE: http://playterm.org/r/bashizzle-and-vim-1385374364
+
+FEATURES
+=========
+
+* full bashification of vim, if you are better at bashscripting compared to vimscript: this is for you
+* write a filename '/etc/motd'..and press CTRL-B, it'll just include that file in the current document
+* write 'snippet' and it will list the contents of ~/.vim/snippet   (snippet.vim compatible)
+* single-word-executables: write 'date' in vim..press CTRL-B, then it turns into 'Mon Nov 25 10:47:40 CET 2013' (it just ran '/usr/bin/date' :)
+* UPDATE: filters! you can now postprocess your snippets or current vimdocument with easy bashscripts (extension .filter)
+* UPDATE: $CLASSNAME and $FILE are now passed to snippets
+* UPDATE: configurationfile ~/.bashizzle for global search/replace on every included snippet 
+
+EXAMPLE
+========
+Enough featureboasting, show me something!
+Ok, bashizzle can easily turn something like this: http://pastie.org/8509238
+into this: http://pastie.org/8509252
+and optionally filter it with this: http://pastie.org/8509293
+
+given that you properly configured your global search/replace keywords in ~/.bashizzle
+
+Make sure you watch the screencat above
