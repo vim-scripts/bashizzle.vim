@@ -3,7 +3,6 @@
 keyword(){
   init
   keyword="$@"
-  echo "$keyword" >> /tmp/keyword
   catfile "$keyword" && return 0
   runcmd "$keyword" 
   [[ "$keyword" =~ "snippet" ]] && find ~/.vim/snippets && return 0
@@ -28,6 +27,7 @@ runcmd(){
 
 filtertext(){
   source ~/.bashizzle
+  IFS=''
   cat - | while read line; do 
     for k in "${!filter[@]}"; do # process variables from config
       strlen=${#k}

@@ -17,11 +17,12 @@ function! <SID>Run_Bashizzle() " {{{
   let g:File = expand("<cfile>")
   let $FILE = expand("%:t")
   let $CLASSNAME = expand("%:t:r")
-  let $VIMBUFFER = join(getline(1,'$'), "\n")
   if filereadable( g:File )
     exe ":norm! dd"
     let isFilter = matchstr( g:File, ".filter" )
     if !empty(isFilter) " full text/replace if filter
+      exe ":norm! d"
+      let $VIMBUFFER = join(getline(1,'$'), "\n")  
       exe ":norm! ggdG" 
     endif
     exe ":.!" . g:bashizzle . " keyword " . g:File 
