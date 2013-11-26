@@ -1,0 +1,27 @@
+/**
+ * File:       $FILE
+ * Date:       $(date)                                                         
+ *                                                                              
+ * The author was to busy coding to rewrite this line.                          
+ *                                                                              
+ * Changelog:                                                                   
+ *                                                                              
+ *  [$(whoami)@$(date)] first sketch from scratch                               
+ *                                                                              
+ * @todo description                                                          
+ *                                                                              
+ * Usage example:                                                               
+ * <code>                                                                       
+ *   // some code                                                               
+ * </code>                                                                      
+ *                                                                              
+ * @version 0.5 
+ * @copyright $(date +%Y) $AUTHOR                                               
+ * @author $AUTHOR, $(whoami) <$EMAIL>      
+ * @package                                                                     
+ * @license                                                                     
+ */                                                                             
+                                                                                
+class $CLASSNAME {
+
+}

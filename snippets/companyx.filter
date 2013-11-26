@@ -1,0 +1,1 @@
+echo "$VIMBUFFER" | sed 's/@author .*/@author Matt Damien <matt@companyx.com>/g' | sed 's/@company .*/@company Company X <www.companyx.com>/g'

@@ -1,6 +1,7 @@
 #!/bin/bash 
 
 keyword(){
+  init
   keyword="$@"
   echo "$keyword" >> /tmp/keyword
   catfile "$keyword" && return 0
@@ -10,8 +11,9 @@ keyword(){
 }
 
 catfile(){
-  [[ -f "$1" ]] && cat "$1" | filtertext && return 0
-  return 1
+  [[ ! -f "$1" ]] && return 1
+  [[ -f "$1" ]] && [[ ! "$1" =~ ".filter" ]] && cat "$1" | filtertext && return 0
+  [[ -f "$1" ]] && [[ "$1" =~ ".filter" ]] && source "$1" # echo "$VIMBUFFER" | sed 's/foo/bar/g'
 }
 
 runcmd(){
@@ -25,8 +27,21 @@ runcmd(){
 }
 
 filtertext(){
-  cat - | while read line; do eval "echo \"$( echo "$line" | sed 's/"/\\"/g')\""; done
+  source ~/.bashizzle
+  cat - | while read line; do 
+    for k in "${!filter[@]}"; do # process variables from config
+      strlen=${#k}
+      [[ "${k:0:1}" == '$' ]] && eval "${k:1:strlen}='${filter[$k]}'"
+      [[ ! "${k:0:1}" == '$' ]] && line=${line//$k/${filter[$k]}}
+    done
+    line="$(eval "echo \"$( echo "$line" | sed 's/"/\\"/g')\"")"; # process bash in snippet
+    echo "$line"
+  done
   return 0
 }
 
+init(){
+  tpl="declare -A filter\nfilter['"'$'"AUTHOR']='Your Name'\nfilter['@package']='@package yourpackage'\nfilter['@license']='@license BSD'\nfilter['"'$'"COMPANY']='yourcompany'\nfilter['"'$'"EMAIL']='your@email.com'"
+  [[ ! -f ~/.bashizzle ]] && printf "$tpl" > ~/.bashizzle
+}
 "$@"
